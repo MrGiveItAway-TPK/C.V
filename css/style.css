@@ -1,0 +1,16 @@
+.pdfobject-container {
+	height: -webkit-fill-available;
+	width: -webkit-fill-available;
+	}
+		
+body {
+	height: -webkit-fill-available;
+	width: -webkit-fill-available;
+	margin:0;
+	}
+		
+html {
+	height: -webkit-fill-available;
+	width: -webkit-fill-available;
+	margin:0;
+	}
