@@ -6,6 +6,9 @@
     <title>Munes Bani Fawaz C.V</title>
 </head>
 <body>
+    <div class="button-container">
+        <a href="pdf/C.V.pdf" target="_blank" class="download-button">Download as PDF</a>
+    </div>
     <div id="pdf-container">
         <!-- Pages will be dynamically added here -->
     </div>
@@ -41,6 +44,14 @@
                         canvasContext: context,
                         viewport: viewport
                     });
+
+                    // Add the page number
+                    const pageNumber = document.createElement('span');
+                    pageNumber.textContent = `Page ${pageNum} of ${pdfDoc.numPages}`;
+                    pageNumber.id = 'page-num';
+
+                    // Position the page number at the bottom of the page
+                    pdfContainer.appendChild(pageNumber);
                 });
             };
 
