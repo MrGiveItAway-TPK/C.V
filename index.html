@@ -1,14 +1,58 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.7/pdfobject.js" integrity="sha512-OLQpZw84GU2xP8iOTgvV1m1MeGvp8hRVqNKl8WyFdjlPeXxgXXnrqSEb7V+mxKhLge9LehdH+0BGt879MfQzYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <title>Munes Bani Fawaz C.V</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Munes Bani Fawaz C.V</title>
 </head>
 <body>
-	<div id="PDFDIV">
-	</div>
+    <div id="pdf-container">
+        <!-- Pages will be dynamically added here -->
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+        const pdfUrl = 'pdf/C.V.pdf'; // Path to your PDF file
+
+        const pdfjsLib = window['pdfjs-dist/build/pdf'];
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+        // Load the PDF
+        pdfjsLib.getDocument(pdfUrl).promise.then(function(pdfDoc) {
+            const pdfContainer = document.getElementById('pdf-container');
+
+            // Function to render a single page
+            const renderPage = (pageNum) => {
+                pdfDoc.getPage(pageNum).then(function(page) {
+                    const scale = 2; // Adjust the scale for better readability
+                    const viewport = page.getViewport({ scale });
+
+                    // Create a canvas for this page
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    // Append the canvas to the container
+                    pdfContainer.appendChild(canvas);
+
+                    // Render the page into the canvas
+                    page.render({
+                        canvasContext: context,
+                        viewport: viewport
+                    });
+                });
+            };
+
+            // Loop through all pages and render them
+            for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                renderPage(pageNum);
+            }
+        }).catch(function(error) {
+            console.error('Error loading PDF:', error);
+            document.getElementById('pdf-container').innerHTML = 
+                '<p>Failed to load the PDF. <a href="' + pdfUrl + '" target="_blank">Click here to download the PDF</a>.</p>';
+        });
+    </script>
 </body>
-<script>PDFObject.embed("pdf/C.V.pdf", "#PDFDIV");</script>
 </html>

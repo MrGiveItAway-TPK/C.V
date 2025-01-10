@@ -1,16 +1,28 @@
-.pdfobject-container {
-	height: -webkit-fill-available;
-	width: -webkit-fill-available;
-	}
-		
-body {
-	height: -webkit-fill-available;
-	width: -webkit-fill-available;
-	margin:0;
-	}
-		
-html {
-	height: -webkit-fill-available;
-	width: -webkit-fill-available;
-	margin:0;
-	}
+/* General Reset */
+html, body {
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    margin: 0;
+}
+
+/* Container Styles */
+#pdf-container {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    height: 100vh;
+}
+
+/* Margins for Larger Screens */
+@media (min-width: 1000px) {
+    #pdf-container {
+        margin-left: 25vw;
+        margin-right: 25vw;
+    }
+}
+
+/* Canvas Styles */
+canvas {
+    border: 1px solid black;
+    margin: 1rem;
+}
